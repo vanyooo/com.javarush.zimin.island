@@ -63,18 +63,5 @@ public class StartIslandSimulation {
         }
         islandArrays[0][0] = cell;
 
-//        ScheduledExecutorService executorStatistic = Executors.newScheduledThreadPool(1);
-//        ScheduledExecutorService executorPlant = Executors.newScheduledThreadPool(1);
-//        ExecutorService executorService = Executors.newFixedThreadPool(4);
-//
-//        executorStatistic.scheduleAtFixedRate(new Statistics(cell), 0, 1000, TimeUnit.MILLISECONDS);
-//        executorPlant.scheduleAtFixedRate(new Plant(cell), 0, 70, TimeUnit.MILLISECONDS);
-//
-//        System.out.println("---------------");
-//
-//        executorStatistic.shutdown();
-//        executorService.shutdown();
-//        executorPlant.shutdown();
-
     }
 }
