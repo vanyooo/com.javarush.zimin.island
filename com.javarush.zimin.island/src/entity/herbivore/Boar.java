@@ -17,7 +17,6 @@ public class Boar extends Herbivore {
         super.setMaxSpeed(Settings.maxSpeedBoar);
         super.setMaxSatiety(Settings.maxSatietyBoar);
         super.setCountOnOneCell(Settings.countBoarOnOneCell);
-        super.setProbabilityEaten(Settings.ProbabilityBeingEatenBoar);
     }
 
     @Override
