@@ -45,14 +45,12 @@ public abstract class Animal {
 
 
     public void worker() {
-        System.out.println(1);
         lock.lock();
         this.actualSatiety = this.actualSatiety - (this.maxSatiety * 0.3);
         lock.unlock();
     }
 
     public void eat(Cell cell) {
-        System.out.println(2);
         if (this.actualSatiety >= this.maxSatiety) {
             this.actualSatiety = this.maxSatiety;
             System.out.println("Я ссыт ");
@@ -90,7 +88,6 @@ public abstract class Animal {
     }
 
     public void reproduce(Cell cell) {
-        System.out.println(3);
         lock.lock();
         try {
             CopyOnWriteArrayList<Animal> listAnimal = cell.listAnimal;
@@ -113,7 +110,6 @@ public abstract class Animal {
     }
 
     public void dei(Cell cell) {
-        System.out.println(4);
         lock.lock();
         try {
             if (actualSatiety <= 0) {
