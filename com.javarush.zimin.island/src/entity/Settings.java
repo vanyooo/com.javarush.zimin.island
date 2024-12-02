@@ -1,55 +1,82 @@
 package entity;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public final class Settings {
+public class Settings {
+
     /* Настройки острова*/
     public static int lengthIsland = 5;
     public static int widthIsland = 5;
     public static int longCycle = 5;
+    /*Настройка растений*/
+    public static int weightPlant = 1;
+    public static int maxCountPlant = 200;
     /*Настройка Хищников*/
     public static double weightWolf = 50;
     public static int maxSpeedWolf = 3;
     public static double maxSatietyWolf = 8;
     public static double actualSatietyWolf = 8;
     public static int countWolfOnOneCell = 30;
-    public static Map<String, Integer> ProbabilityBeingEatenWolf = Map.of("Sheep", 70, "Horse", 10, "Deer", 15,
-            "Rabbit", 60, "Mouse", 80, "Goat", 60, "Boar", 15, "Buffalo", 10,
-            "Duck", 40, "Caterpillar", 0);
+    public static Map<String, Integer> ProbabilityBeingEatenWolf = Stream.of(
+                    new Object[][]{
+                            {"Boa", 0}, {"Fox", 0}, {"Bear", 0}, {"Eagle", 0}, {"Horse", 10}, {"Deer", 15},
+                            {"Rabbit", 60}, {"Mouse", 80}, {"Goat", 60}, {"Sheep", 70}, {"Boar", 15}, {"Buffalo", 10},
+                            {"Duck", 40}, {"Caterpillar", 0}, {"Wolf", 0}})
+            .collect(Collectors.toMap(data -> (String) data[0], data -> (Integer) data[1]));
 
     public static double weightBoa = 15;
     public static int maxSpeedBoa = 1;
     public static double maxSatietyBoa = 3;
     public static double actualSatietyBoa = 3;
     public static int countBoaOnOneCell = 30;
-    public static Map<String, Integer> ProbabilityBeingEatenBoa = Map.of("Fox", 15, "Rabbit", 20, "Mouse", 40,
-            "Duck", 10);
+    public static Map<String, Integer> ProbabilityBeingEatenBoa = Stream.of(
+                    new Object[][]{
+                            {"Wolf", 0}, {"Fox", 15}, {"Bear", 0}, {"Eagle", 0}, {"Horse", 0}, {"Deer", 0},
+                            {"Rabbit", 20}, {"Mouse", 40}, {"Goat", 0}, {"Sheep", 0}, {"Boar", 0}, {"Buffalo", 0},
+                            {"Duck", 10}, {"Caterpillar", 0}, {"Boa", 0}})
+            .collect(Collectors.toMap(data -> (String) data[0], data -> (Integer) data[1]));
 
     public static double weightFox = 8;
     public static int maxSpeedFox = 2;
     public static double maxSatietyFox = 2;
     public static double actualSatietyFox = 2;
     public static int countFoxOnOneCell = 30;
-    public static Map<String, Integer> ProbabilityBeingEatenFox = Map.of("Rabbit", 70, "Mouse", 90, "Duck", 80,
-            "Caterpillar", 40);
+    public static Map<String, Integer> ProbabilityBeingEatenFox = Stream.of(
+                    new Object[][]{
+                            {"Wolf", 0}, {"Boa", 0}, {"Bear", 0}, {"Eagle", 0}, {"Horse", 0}, {"Deer", 0},
+                            {"Rabbit", 70}, {"Mouse", 90}, {"Goat", 0}, {"Sheep", 0}, {"Boar", 0}, {"Buffalo", 0},
+                            {"Duck", 60}, {"Caterpillar", 40}, {"Fox", 0}})
+            .collect(Collectors.toMap(data -> (String) data[0], data -> (Integer) data[1]));
+
 
     public static double weightEagle = 6;
     public static int maxSpeedEagle = 3;
     public static double maxSatietyEagle = 1;
     public static double actualSatietyEagle = 1;
     public static int countEagleOnOneCell = 20;
-    public static Map<String, Integer> ProbabilityBeingEatenEagle = Map.of("Rabbit", 90, "Mouse", 90, "Duck", 80,
-            "Fox", 10);
+    public static Map<String, Integer> ProbabilityBeingEatenEagle = Stream.of(
+                    new Object[][]{
+                            {"Wolf", 0}, {"Boa", 0}, {"Fox", 10}, {"Bear", 0}, {"Horse", 0}, {"Deer", 0},
+                            {"Rabbit", 90}, {"Mouse", 90}, {"Goat", 0}, {"Sheep", 0}, {"Boar", 0}, {"Buffalo", 0},
+                            {"Duck", 80}, {"Caterpillar", 0}, {"Eagle", 0}})
+            .collect(Collectors.toMap(data -> (String) data[0], data -> (Integer) data[1]));
+
 
     public static double weightBear = 500;
     public static int maxSpeedBear = 2;
     public static double maxSatietyBear = 60;
     public static double actualSatietyBear = 60;
     public static int countBearOnOneCell = 5;
-    public static Map<String, Integer> ProbabilityBeingEatenBear = Map.of("Horse", 40, "Deer", 80,
-            "Rabbit", 80, "Mouse", 90, "Goat", 70, "Boar", 50, "Buffalo", 20,
-            "Duck", 10, "Boa", 80, "Sheep", 70);
+    public static Map<String, Integer> ProbabilityBeingEatenBear = Stream.of(
+                    new Object[][]{
+                            {"Wolf", 0}, {"Boa", 80}, {"Fox", 0}, {"Eagle", 0}, {"Horse", 40}, {"Deer", 80},
+                            {"Rabbit", 80}, {"Mouse", 90}, {"Goat", 70}, {"Sheep", 70}, {"Boar", 50}, {"Buffalo", 20},
+                            {"Duck", 10}, {"Caterpillar", 0}, {"Plants", 0}})
+            .collect(Collectors.toMap(data -> (String) data[0], data -> (Integer) data[1]));
+
+
     /*Настройка Травоядных*/
     public static double weightSheep = 70;
     public static int maxSpeedSheep = 3;
@@ -109,7 +136,7 @@ public final class Settings {
     public static int maxSpeedRabbit = 2;
     public static double maxSatietyRabbit = 0.45;
     public static double actualSatietyRabbit = 0.45;
-    public static int countOnOneCellRabbit = 150;
+    public static int countRabbitOnOneCell = 150;
 
 
     public static Map<String, Double> weightOfAllEdibleAnimals = Map.of("Sheep", 70.0, "Horse", 400.0, "Deer", 300.0,

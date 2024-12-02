@@ -9,6 +9,6 @@ public class Rabbit extends Herbivore {
         super.setMaxSpeed(Settings.maxSpeedRabbit);
         super.setMaxSatiety(Settings.maxSatietyRabbit);
         super.setActualSatiety(Settings.actualSatietyRabbit);
-        super.setCountOnOneCell(Settings.countOnOneCellRabbit);
+        super.setCountOnOneCell(Settings.countRabbitOnOneCell);
     }
 }
