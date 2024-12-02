@@ -142,9 +142,7 @@ public class Settings {
     public static Map<String, Double> weightOfAllEdibleAnimals = Map.of("Sheep", 70.0, "Horse", 400.0, "Deer", 300.0,
             "Rabbit", 2.0, "Mouse", 0.1, "Goat", 60.0, "Boar", 400.0, "Buffalo", 700.0,
             "Duck", 1.0, "Caterpillar", 0.01);
-//    public static Map<String, Double> weightOfAllEdibleAnimals = Map.of("Sheep", 35.0, "Horse", 200.0,"Deer",150.0,
-//            "Rabbit", 1.0, "Mouse", 0.05, "Goat", 30.0, "Boar", 200.0, "Buffalo", 350.0,
-//            "Duck", 0.5, "Caterpillar", 0.01);
+
 
 
 }

@@ -2,7 +2,6 @@ package entity;
 
 import entity.Location.Cell;
 import entity.Location.Island;
-import lombok.Data;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ThreadLocalRandom;
@@ -46,14 +45,14 @@ public abstract class Animal {
 
 
     public void worker() {
+        System.out.println(1);
         lock.lock();
-//        System.out.println("Method worker");
-//        System.out.println("Работает " + this.getClass().getSimpleName());
         this.actualSatiety = this.actualSatiety - (this.maxSatiety * 0.3);
         lock.unlock();
     }
 
     public void eat(Cell cell) {
+        System.out.println(2);
         if (this.actualSatiety >= this.maxSatiety) {
             this.actualSatiety = this.maxSatiety;
             System.out.println("Я ссыт ");
@@ -91,32 +90,22 @@ public abstract class Animal {
     }
 
     public void reproduce(Cell cell) {
+        System.out.println(3);
         lock.lock();
-//        System.out.println("Method reproduce");
         try {
-//            System.out.println("Пробует родить " + this.getClass().getSimpleName());
             CopyOnWriteArrayList<Animal> listAnimal = cell.listAnimal;
             int randomNum = ThreadLocalRandom.current().nextInt(1, 101);
             if (randomNum >= 50) {
-                int sizeIndividual = listAnimal.stream().filter(count -> this.getClass().equals(count.getClass())).toList().size();
-//            List<Animal> animalForMating = listAnimal.stream().filter(c -> this.getClass().equals(c.getClass())).toList();
+                int sizeIndividual = listAnimal.stream().filter(count -> this.getClass()
+                        .equals(count.getClass())).toList().size();
                 if (sizeIndividual < 2) {
-//                animalForMating.isEmpty() || sizeIndividual == 1
-//                    System.out.println("Пары нет");
                     return;
                 }
                 if (sizeIndividual >= countOnOneCell) {
-//                    System.out.println("Вас и так много");
                     return;
                 }
-//                System.out.println(sizeIndividual);
-//                System.out.println(this.getClass().getSimpleName());
                 String simpleName = this.getClass().getSimpleName();
-
-//                System.out.println("Создали еще одного " + simpleName);
                 listAnimal.add(AnimalFactory.giveBirthAnimal(simpleName));
-//                System.out.println(cell.listAnimal.stream().filter(count -> this.getClass().equals(count.getClass())).toList().size());
-
             }
         } finally {
             lock.unlock();
@@ -124,14 +113,11 @@ public abstract class Animal {
     }
 
     public void dei(Cell cell) {
+        System.out.println(4);
         lock.lock();
-//        System.out.println("Method die");
         try {
-//            System.out.println("Пробуем умереть " + this.getClass().getSimpleName());
-//            System.out.println(actualSatiety);
             if (actualSatiety <= 0) {
                 cell.listAnimal.remove(this);
-//                System.out.println("Die");
             }
         } finally {
             lock.unlock();

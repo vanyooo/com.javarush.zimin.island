@@ -10,8 +10,6 @@ import java.util.concurrent.locks.ReentrantLock;
 
 public class Cell {
     public Lock lock = new ReentrantLock();
-    Island island = new Island();
-
 
     private static final CountDownLatch START = new CountDownLatch(4);
 

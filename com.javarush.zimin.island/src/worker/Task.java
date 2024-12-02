@@ -14,7 +14,6 @@ public class Task {
 
     public void doTask() {
         animal.reproduce(cell);
-        animal.worker();
         animal.eat(cell);
         animal.worker();
         animal.dei(cell);

@@ -17,7 +17,6 @@ public class StartIslandSimulation {
         Statistics statistics = new Statistics();
         statistics.collectingStatistics(island);
 
-//        ExecutorService executorService = Executors.newFixedThreadPool(3);
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(2);
         executorService.scheduleAtFixedRate(new PlantWorker(island), 0, 5, TimeUnit.MILLISECONDS);
         for (int i = 0; i < 500; i++) {

@@ -19,18 +19,12 @@ public abstract class Predator extends Animal {
     public void eat(Cell cell) {
         lock.lock();
         try {
-//            System.out.println("Method eat");
-//            System.out.println("Пробует есть " + this.getClass().getSimpleName());
             if (actualSatiety >= maxSatiety) {
                 actualSatiety = maxSatiety;
-//                System.out.println("Я ссыт ");
                 return;
             }
-//        List<Animal> listEat = new ArrayList<>(cell.queueEntity.stream().filter(a -> a instanceof Animal).map(a -> (Animal) a)
-//                .toList());
             CopyOnWriteArrayList<Animal> listAnimal = cell.listAnimal;
             if (listAnimal.isEmpty()) {
-//                System.out.println("Больше нет доступной еды.");
                 return;
             }
             List<Animal> listFilter = listAnimal.stream().filter(animal -> this.probabilityEaten.getOrDefault
@@ -43,23 +37,17 @@ public abstract class Predator extends Animal {
                 try {
                     Integer probability = this.probabilityEaten.get(animal.getClass().getSimpleName());
                     int randomNum = ThreadLocalRandom.current().nextInt(1, 101);
-//                    System.out.println(probability + " - " + randomNum);
                     if (probability >= randomNum) {
-//                        System.out.println("Съели " + animal.getClass().getSimpleName());
                         Double weightFood = Settings.weightOfAllEdibleAnimals.get(animal.getClass().getSimpleName());
                         if (weightFood > maxSatiety) {
                             actualSatiety = maxSatiety;
-//                            System.out.println(animal.getClass().getSimpleName() + " die");
                         } else {
                             actualSatiety += weightFood;
-//                            System.out.println(animal.getClass().getSimpleName() + " die");
                         }
                         cell.listAnimal.remove(animal);
                     }
                     return;
                 } catch (NullPointerException nullPint) {
-//                    System.out.println("Выпал 0");
-//                    eat(cell);
                     return;
                 }
             }
