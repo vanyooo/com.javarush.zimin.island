@@ -17,12 +17,13 @@ public class StartIslandSimulation {
         Statistics statistics = new Statistics();
         statistics.collectingStatistics(island);
 
+        Wolf wolf = new Wolf();
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(2);
         executorService.scheduleAtFixedRate(new PlantWorker(island), 0, 5, TimeUnit.MILLISECONDS);
-        for (int i = 0; i < 500; i++) {
+        for (int i = 0; i < 50; i++) {
             for (int j = 0; j < island.islandArrays.length; j++) {
                 for (int k = 0; k < island.islandArrays[j].length; k++) {
-                    AnimalWorker organismWorker = new AnimalWorker(island.islandArrays[j][k]);
+                    AnimalWorker organismWorker = new AnimalWorker(island,island.islandArrays[j][k]);
                     organismWorker.processOneCell(island.islandArrays[j][k]);
                 }
             }

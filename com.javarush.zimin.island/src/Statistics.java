@@ -36,10 +36,12 @@ public class Statistics implements Runnable {
                 .filter(c -> c instanceof Duck).map(c -> (Duck) c).toList().size();
         int sizeHorse = Arrays.stream(island.islandArrays).flatMap(Arrays::stream).flatMap(cell -> cell.listAnimal.stream())
                 .filter(c -> c instanceof Horse).map(c -> (Horse) c).toList().size();
+        int sizeCaterpillar = Arrays.stream(island.islandArrays).flatMap(Arrays::stream).flatMap(cell -> cell.listAnimal.stream())
+                .filter(c -> c instanceof Caterpillar).map(c -> (Caterpillar) c).toList().size();
         System.out.print("Wolf: " + sizeWolf + "||" + "Sheep: " + sizeSheep + "||" + "Plant: " + sizePlant + "||" + "Bear: " + sizeBear
                 + "||" + "Boa: " + sizeBoa + "||" + "Fox: " + sizeFox + "||" + "Eagle: " + sizeEagle + "||" + "Deer: " + sizeDeer
                 + "||" + "Buf: " + sizeBuf + "||" + "Rabbit: " + sizeRabbit + "||" + "Goat: " + sizeGoat + "||" + "Mouse: " + sizeMouse
-                + "||" + "Duck: " + sizeDuck + "||" + "Horse: " + sizeHorse);
+                + "||" + "Duck: " + sizeDuck + "||" + "Horse: " + sizeHorse + "||" + "Caterpillar: " + sizeCaterpillar);
         System.out.println();
     }
 

@@ -1,6 +1,7 @@
 package worker;
 
 import entity.Location.Cell;
+import entity.Location.Island;
 import entity.herbivore.*;
 import entity.predator.*;
 
@@ -8,10 +9,12 @@ import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class AnimalWorker implements Runnable{
+    Island island;
     public Cell cell;
     private final Queue<Task> tasks = new ConcurrentLinkedQueue<>();
 
-    public AnimalWorker(Cell cell) {
+    public AnimalWorker(Island island, Cell cell) {
+        this.island = island;
         this.cell = cell;
     }
 
@@ -31,7 +34,7 @@ public class AnimalWorker implements Runnable{
     public void processOneCell(Cell cell) {
         cell.lock.lock();
         try {
-            cell.listAnimal.forEach(animal -> tasks.add(new Task(animal, cell)));
+            cell.listAnimal.forEach(animal -> tasks.add(new Task(animal, cell, island)));
         } finally {
             cell.lock.unlock();
         }
