@@ -19,7 +19,7 @@ public class CreatingMultithreading {
         this.island = island;
         this.executorSimulationService = Executors.newScheduledThreadPool(Settings.countThread);
         this.serviceForCreaturesWorker = Executors.newFixedThreadPool(Settings.countThread);
-        this.executorServicePlant = Executors.newScheduledThreadPool(Settings.countThread);
+        this.executorServicePlant = Executors.newScheduledThreadPool(Settings.countThreadShed);
     }
 
     public void islandStartLive() {

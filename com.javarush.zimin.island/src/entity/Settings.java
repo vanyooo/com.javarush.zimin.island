@@ -7,11 +7,14 @@ import java.util.stream.Stream;
 public class Settings {
 
     /* Настройки острова*/
-    public static int lengthIsland = 25;
-    public static int widthIsland = 25;
+    public static int lengthIsland = 3;
+    public static int widthIsland = 3;
     public static int longCycle = 5;
     public static int countThread = 4;
     public static int countThreadShed = 2;
+    /* Настройки размножения и поедания*/
+    public static int randomMating = 10;
+    public static double onTopWeightAnimalAndPlant = 0.1;
     /*Настройка растений*/
     public static int weightPlant = 1;
     public static int maxCountPlant = 200;

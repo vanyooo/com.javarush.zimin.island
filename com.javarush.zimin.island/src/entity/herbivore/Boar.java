@@ -4,14 +4,16 @@ import entity.Animal;
 import entity.Location.Cell;
 import entity.Plant;
 import entity.Settings;
+import lombok.Data;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ThreadLocalRandom;
-
+@Data
 public class Boar extends Herbivore {
 
     public Boar() {
+        super.setActualSatiety(Settings.actualSatietyBoar);
         super.setActualSatiety(Settings.actualSatietyBoar);
         super.setWeight(Settings.weightBoar);
         super.setMaxSpeed(Settings.maxSpeedBoar);
@@ -20,18 +22,18 @@ public class Boar extends Herbivore {
     }
 
     @Override
-    public void eat(Cell cell) {
+    public boolean eat(Cell cell) {
         lock.lock();
         try {
             if (actualSatiety >= maxSatiety) {
                 actualSatiety = maxSatiety;
-                return;
+                return true;
             }
             CopyOnWriteArrayList<Animal> listAnimal = cell.listAnimal;
             List<Animal> listCaterpillar = listAnimal.stream().filter(animal -> animal instanceof Caterpillar).toList();
             if (!listCaterpillar.isEmpty()) {
                 for (Animal cater : listCaterpillar) {
-                    int probability = Settings.chanceEatCaterpillarBoar;
+                    int probability = Settings.chanceEatCaterpillarMouse;
                     int randomNum = ThreadLocalRandom.current().nextInt(1, 101);
                     if (probability >= randomNum) {
                         Double weightFood = Settings.weightOfAllEdibleAnimals.get(cater.getClass().getSimpleName());
@@ -44,9 +46,13 @@ public class Boar extends Herbivore {
                     }
                 }
             }
+            if (actualSatiety >= maxSatiety) {
+                actualSatiety = maxSatiety;
+                return true;
+            }
             CopyOnWriteArrayList<Plant> listPlant = cell.listPlant;
             if (listPlant.isEmpty()) {
-                return;
+                return false;
             }
             for (Plant plant : listPlant) {
                 int weightPlant = Plant.weight;
@@ -57,10 +63,11 @@ public class Boar extends Herbivore {
                     actualSatiety = actualSatiety + weightPlant + (maxSatiety * 0.3);
                     cell.listPlant.remove(plant);
                 }
-                return;
+                return false;
             }
         } finally {
             lock.unlock();
         }
+        return false;
     }
 }

@@ -20,48 +20,52 @@ public class Duck extends Herbivore {
     }
 
     @Override
-    public void eat(Cell cell) {
+    public boolean eat(Cell cell) {
         lock.lock();
         try {
             if (actualSatiety >= maxSatiety) {
                 actualSatiety = maxSatiety;
-                return;
+                return true;
             }
             CopyOnWriteArrayList<Animal> listAnimal = cell.listAnimal;
             List<Animal> listCaterpillar = listAnimal.stream().filter(animal -> animal instanceof Caterpillar).toList();
             if (!listCaterpillar.isEmpty()) {
-                Animal first = listCaterpillar.getFirst();
-                int probability = Settings.chanceEatCaterpillarDuck;
-                int randomNum = ThreadLocalRandom.current().nextInt(1, 101);
-                if (probability >= randomNum) {
-                    Double weightFood = Settings.weightOfAllEdibleAnimals.get(first.getClass().getSimpleName());
-                    if (weightFood > maxSatiety) {
-                        actualSatiety = maxSatiety;
-                    } else {
-                        actualSatiety += weightFood;
+                for (Animal cater : listCaterpillar) {
+                    int probability = Settings.chanceEatCaterpillarMouse;
+                    int randomNum = ThreadLocalRandom.current().nextInt(1, 101);
+                    if (probability >= randomNum) {
+                        Double weightFood = Settings.weightOfAllEdibleAnimals.get(cater.getClass().getSimpleName());
+                        if (weightFood > maxSatiety) {
+                            actualSatiety = maxSatiety;
+                        } else {
+                            actualSatiety += weightFood;
+                        }
+                        cell.listAnimal.remove(cater);
                     }
-                    cell.listAnimal.remove(first);
                 }
             }
             if (actualSatiety >= maxSatiety) {
                 actualSatiety = maxSatiety;
-                return;
+                return true;
             }
             CopyOnWriteArrayList<Plant> listPlant = cell.listPlant;
             if (listPlant.isEmpty()) {
-                return;
+                return false;
             }
-            Plant firstPlant = listPlant.getFirst();
-            int weightPlant = Plant.weight;
-            if (weightPlant > maxSatiety) {
-                actualSatiety = maxSatiety;
-                cell.listPlant.remove(firstPlant);
-            } else {
-                actualSatiety = actualSatiety + weightPlant + (maxSatiety * 0.3);
-                cell.listPlant.remove(firstPlant);
+            for (Plant plant : listPlant) {
+                int weightPlant = Plant.weight;
+                if (weightPlant > maxSatiety) {
+                    actualSatiety = maxSatiety;
+                    cell.listPlant.remove(plant);
+                } else {
+                    actualSatiety = actualSatiety + weightPlant + (maxSatiety * 0.3);
+                    cell.listPlant.remove(plant);
+                }
+                return false;
             }
         } finally {
             lock.unlock();
         }
+        return false;
     }
 }

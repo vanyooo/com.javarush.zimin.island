@@ -20,12 +20,12 @@ public class Mouse extends Herbivore {
     }
 
     @Override
-    public void eat(Cell cell) {
+    public boolean eat(Cell cell) {
         lock.lock();
         try {
             if (actualSatiety >= maxSatiety) {
                 actualSatiety = maxSatiety;
-                return;
+                return true;
             }
             CopyOnWriteArrayList<Animal> listAnimal = cell.listAnimal;
             List<Animal> listCaterpillar = listAnimal.stream().filter(animal -> animal instanceof Caterpillar).toList();
@@ -46,11 +46,11 @@ public class Mouse extends Herbivore {
             }
             if (actualSatiety >= maxSatiety) {
                 actualSatiety = maxSatiety;
-                return;
+                return true;
             }
                 CopyOnWriteArrayList<Plant> listPlant = cell.listPlant;
             if (listPlant.isEmpty()) {
-                return;
+                return false;
             }
             for (Plant plant : listPlant) {
                 int weightPlant = Plant.weight;
@@ -61,10 +61,11 @@ public class Mouse extends Herbivore {
                     actualSatiety = actualSatiety + weightPlant + (maxSatiety * 0.3);
                     cell.listPlant.remove(plant);
                 }
-                return;
+                return false;
             }
         } finally {
             lock.unlock();
         }
+        return false;
     }
 }

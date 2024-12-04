@@ -16,16 +16,16 @@ public abstract class Predator extends Animal {
     Lock lock = new ReentrantLock();
 
     @Override
-    public void eat(Cell cell) {
+    public boolean eat(Cell cell) {
         lock.lock();
         try {
             if (actualSatiety >= maxSatiety) {
                 actualSatiety = maxSatiety;
-                return;
+                return true;
             }
             CopyOnWriteArrayList<Animal> listAnimal = cell.listAnimal;
             if (listAnimal.isEmpty()) {
-                return;
+                return false;
             }
             List<Animal> listFilter = listAnimal.stream().filter(animal -> this.probabilityEaten.getOrDefault
                             (animal.getClass().getSimpleName(), 0) > 0).sorted((a1, a2) -> Integer.compare(
@@ -34,11 +34,9 @@ public abstract class Predator extends Animal {
                     ))
                     .toList();
             if (listFilter.isEmpty()) {
-                return;
+                return false;
             }
-            Animal first = null;
-            first = listFilter.getFirst();
-//                System.out.println(this.getClass().getSimpleName() + "||" + first.getClass().getSimpleName());
+            Animal first = listFilter.getFirst();
             Integer probability = this.probabilityEaten.get(first.getClass().getSimpleName());
             int randomNum = ThreadLocalRandom.current().nextInt(1, 101);
             if (probability >= randomNum) {
@@ -46,12 +44,13 @@ public abstract class Predator extends Animal {
                 if (weightFood > maxSatiety) {
                     actualSatiety = maxSatiety;
                 } else {
-                    actualSatiety += weightFood;
+                    actualSatiety += weightFood + (maxSatiety * Settings.onTopWeightAnimalAndPlant);
                 }
                 cell.listAnimal.remove(first);
             }
         } finally {
             lock.unlock();
         }
+        return true;
     }
 }

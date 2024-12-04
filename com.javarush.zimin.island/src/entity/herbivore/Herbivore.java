@@ -3,24 +3,27 @@ package entity.herbivore;
 import entity.Animal;
 import entity.Location.Cell;
 import entity.Plant;
+import entity.Settings;
+import lombok.Data;
+
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-
+@Data
 public abstract class Herbivore extends Animal {
     Lock lock = new ReentrantLock();
 
     @Override
-    public void eat(Cell cell) {
+    public boolean eat(Cell cell) {
         lock.lock();
         try {
             if (actualSatiety >= maxSatiety) {
                 actualSatiety = maxSatiety;
-                return;
+                return true;
             }
             CopyOnWriteArrayList<Plant> listPlant = cell.listPlant;
             if (listPlant.isEmpty()) {
-                return;
+                return false;
             }
             for (Plant plant : listPlant) {
                 int weightPlant = Plant.weight;
@@ -28,13 +31,14 @@ public abstract class Herbivore extends Animal {
                     actualSatiety = maxSatiety;
                     cell.listPlant.remove(plant);
                 } else {
-                    actualSatiety = actualSatiety + weightPlant;
+                    actualSatiety = actualSatiety + weightPlant + (maxSatiety * Settings.onTopWeightAnimalAndPlant);
                     cell.listPlant.remove(plant);
                 }
-                return;
+                return true;
             }
         }finally {
             lock.unlock();
         }
+        return true;
     }
 }
