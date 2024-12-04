@@ -4,12 +4,10 @@ import entity.Animal;
 import entity.Location.Cell;
 import entity.Plant;
 import entity.Settings;
-import lombok.Data;
-
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-@Data
+
 public abstract class Herbivore extends Animal {
     Lock lock = new ReentrantLock();
 
