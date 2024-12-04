@@ -2,13 +2,12 @@ package entity;
 
 import entity.Location.Cell;
 import entity.Location.Island;
-import lombok.Data;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
-@Data
+
 public abstract class Animal {
 
     public double weight;
@@ -19,6 +18,30 @@ public abstract class Animal {
     public Map<String, Integer> probabilityEaten;
 
     Lock lock = new ReentrantLock();
+
+    public void setWeight(double weight) {
+        this.weight = weight;
+    }
+
+    public void setMaxSpeed(int maxSpeed) {
+        this.maxSpeed = maxSpeed;
+    }
+
+    public void setMaxSatiety(double maxSatiety) {
+        this.maxSatiety = maxSatiety;
+    }
+
+    public void setActualSatiety(double actualSatiety) {
+        this.actualSatiety = actualSatiety;
+    }
+
+    public void setCountOnOneCell(int countOnOneCell) {
+        this.countOnOneCell = countOnOneCell;
+    }
+
+    public void setProbabilityEaten(Map<String, Integer> probabilityEaten) {
+        this.probabilityEaten = probabilityEaten;
+    }
 
     public void worker() {
         lock.lock();

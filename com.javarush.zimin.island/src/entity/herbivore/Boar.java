@@ -4,12 +4,10 @@ import entity.Animal;
 import entity.Location.Cell;
 import entity.Plant;
 import entity.Settings;
-import lombok.Data;
-
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ThreadLocalRandom;
-@Data
+
 public class Boar extends Herbivore {
 
     public Boar() {
