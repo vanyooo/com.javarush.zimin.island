@@ -5,10 +5,11 @@ import entity.herbivore.*;
 import entity.predator.*;
 
 import java.util.Arrays;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
-public class Statistics implements Runnable {
+public class Statistics {
 
-    public static int size;
     public static void collectingStatistics(Island island) {
 
         int sizePlant = Arrays.stream(island.islandArrays).flatMap(Arrays::stream).mapToInt(cell -> cell.listPlant.size()).sum();
@@ -38,6 +39,8 @@ public class Statistics implements Runnable {
                 .filter(c -> c instanceof Duck).map(c -> (Duck) c).toList().size();
         int sizeHorse = Arrays.stream(island.islandArrays).flatMap(Arrays::stream).flatMap(cell -> cell.listAnimal.stream())
                 .filter(c -> c instanceof Horse).map(c -> (Horse) c).toList().size();
+        int sizeBoar = Arrays.stream(island.islandArrays).flatMap(Arrays::stream).flatMap(cell -> cell.listAnimal.stream())
+                .filter(c -> c instanceof Boar).map(c -> (Boar) c).toList().size();
         int sizeCaterpillar = Arrays.stream(island.islandArrays).flatMap(Arrays::stream).flatMap(cell -> cell.listAnimal.stream())
                 .filter(c -> c instanceof Caterpillar).map(c -> (Caterpillar) c).toList().size();
         int sizePredator = Arrays.stream(island.islandArrays).flatMap(Arrays::stream).flatMap(cell -> cell.listAnimal.stream())
@@ -47,20 +50,16 @@ public class Statistics implements Runnable {
         System.out.print("Wolf: " + sizeWolf + "||" + "Sheep: " + sizeSheep + "||" + "||" + "Bear: " + sizeBear
                 + "||" + "Boa: " + sizeBoa + "||" + "Fox: " + sizeFox + "||" + "Eagle: " + sizeEagle + "||" + "Deer: " + sizeDeer
                 + "||" + "Buf: " + sizeBuf + "||" + "Rabbit: " + sizeRabbit + "||" + "Goat: " + sizeGoat + "||" + "Mouse: " + sizeMouse
-                + "||" + "Duck: " + sizeDuck + "||" + "Horse: " + sizeHorse + "||" + "Caterpillar: " + sizeCaterpillar + "\n");
+                + "||" + "Duck: " + sizeDuck + "||" + "Horse: " + sizeHorse+ "||" + "Boar: " + sizeBoar + "||" + "Caterpillar: " + sizeCaterpillar + "\n");
         System.out.print( "Plant: " + sizePlant + "||" + "Herbivore: " + sizeHerbivore + "||" + "Predator: " + sizePredator + "\n");
+
     }
 
     public static int countNumberAnimal(Island island) {
-        int sizePredator = Arrays.stream(island.islandArrays).flatMap(Arrays::stream).flatMap(cell -> cell.listAnimal.stream())
-                .filter(c -> c instanceof Predator).map(c -> (Predator) c).toList().size();
-        int sizeHerbivore = Arrays.stream(island.islandArrays).flatMap(Arrays::stream).flatMap(cell -> cell.listAnimal.stream())
-                .filter(c -> c instanceof Herbivore).map(c -> (Herbivore) c).toList().size();
-        return sizeHerbivore + sizePredator;
-    }
-
-    @Override
-    public void run() {
-
+            int sizePredator = Arrays.stream(island.islandArrays).flatMap(Arrays::stream).flatMap(cell -> cell.listAnimal.stream())
+                    .filter(c -> c instanceof Predator).map(c -> (Predator) c).toList().size();
+            int sizeHerbivore = Arrays.stream(island.islandArrays).flatMap(Arrays::stream).flatMap(cell -> cell.listAnimal.stream())
+                    .filter(c -> c instanceof Herbivore).map(c -> (Herbivore) c).toList().size();
+            return sizeHerbivore + sizePredator;
     }
 }

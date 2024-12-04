@@ -20,6 +20,7 @@ public class IslandInitialization {
         }
         island.islandArrays[0][0].listAnimal.addAll(createAnimals());
         island.islandArrays[Settings.lengthIsland-1][Settings.widthIsland-1].listAnimal.addAll(createAnimals());
+        island.islandArrays[Settings.lengthIsland / 2][Settings.widthIsland / 2].listAnimal.addAll(createAnimals());
     }
     public static List<Animal> createAnimals() {
         List<Animal> animals = new CopyOnWriteArrayList<>();

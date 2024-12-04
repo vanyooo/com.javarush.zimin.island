@@ -23,7 +23,7 @@ public class CreatingMultithreading {
     }
 
     public void islandStartLive() {
-        executorSimulationService.scheduleWithFixedDelay(this::lifeCycle, 0, 1, TimeUnit.SECONDS);
+        executorSimulationService.scheduleWithFixedDelay(this::lifeCycle, 0, 1000, TimeUnit.MILLISECONDS);
         executorServicePlant.scheduleWithFixedDelay(new PlantWorker(island), 0, 500, TimeUnit.MILLISECONDS);
     }
 
@@ -31,7 +31,7 @@ public class CreatingMultithreading {
         AnimalWorker animalWorker = new AnimalWorker(island);
         serviceForCreaturesWorker.execute(animalWorker);
         int stop = Statistics.countNumberAnimal(island);
-        if (stop == 0) {
+        if (Statistics.countNumberAnimal(island) == 0) {
             stopSimulation();
         }
     }
@@ -39,7 +39,7 @@ public class CreatingMultithreading {
     public void stopSimulation() {
         serviceForCreaturesWorker.shutdown();
         try {
-            if (!serviceForCreaturesWorker.awaitTermination(2, TimeUnit.SECONDS)) {
+            if (!serviceForCreaturesWorker.awaitTermination(1, TimeUnit.SECONDS)) {
                 serviceForCreaturesWorker.shutdownNow();
             }
         } catch (InterruptedException e) {
@@ -47,7 +47,7 @@ public class CreatingMultithreading {
         }
         executorSimulationService.shutdown();
         try {
-            if (!executorSimulationService.awaitTermination(2, TimeUnit.SECONDS)) {
+            if (!executorSimulationService.awaitTermination(1, TimeUnit.SECONDS)) {
                 executorSimulationService.shutdownNow();
             }
         } catch (InterruptedException e) {

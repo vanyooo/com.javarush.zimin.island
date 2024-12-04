@@ -115,7 +115,7 @@ public abstract class Animal {
         try {
             CopyOnWriteArrayList<Animal> listAnimal = cell.listAnimal;
             int randomNum = ThreadLocalRandom.current().nextInt(1, 101);
-            if (randomNum >= 50) {
+            if (randomNum >= 60) {
                 int sizeIndividual = listAnimal.stream().filter(count -> this.getClass()
                         .equals(count.getClass())).toList().size();
                 if (sizeIndividual < 2) {

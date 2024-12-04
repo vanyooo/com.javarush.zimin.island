@@ -41,7 +41,6 @@ public class AnimalWorker implements Runnable {
                     latch.await();
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
-                    System.err.println("INTERRUPTED");
                 }
             }
         }
@@ -62,6 +61,7 @@ public class AnimalWorker implements Runnable {
     }
 
     public void printStat(Island island) {
+
         int sizePlant = Arrays.stream(island.islandArrays).flatMap(Arrays::stream).mapToInt(cell -> cell.listPlant.size()).sum();
         int sizeWolf = Arrays.stream(island.islandArrays).flatMap(Arrays::stream).flatMap(cell -> cell.listAnimal.stream())
                 .filter(c -> c instanceof Wolf).map(c -> (Wolf) c).toList().size();
