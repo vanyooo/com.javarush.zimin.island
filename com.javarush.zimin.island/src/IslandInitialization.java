@@ -4,21 +4,22 @@ import entity.Location.Island;
 import entity.Plant;
 import entity.herbivore.*;
 import entity.predator.*;
+import worker.AnimalWorker;
 
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class IslandInitialization {
-    public static void in (Island island) {
+    public static void start (Island island) {
         int size = island.islandArrays.length;
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < island.islandArrays[i].length; j++) {
                 Cell cell = new Cell();
-                cell.listAnimal.addAll(createAnimals());
                 cell.listPlant.addAll(createPlants());
                 island.islandArrays[i][j] = cell;
             }
         }
+        island.islandArrays[0][0].listAnimal.addAll(createAnimals());
     }
     public static List<Animal> createAnimals() {
         List<Animal> animals = new CopyOnWriteArrayList<>();
@@ -56,8 +57,15 @@ public class IslandInitialization {
     }
 
     public static List<Plant> createPlants() {
-        return List.of(new Plant(), new Plant(), new Plant(), new Plant() ,new Plant(), new Plant(), new Plant(), new Plant(),
-                new Plant(), new Plant());
+        return List.of(new Plant(), new Plant(), new Plant());
     }
 
+    public static boolean check() {
+        boolean result = true;
+        int i = AnimalWorker.countDay.get();
+        if (i > 10) {
+            result = false;
+        }
+        return result;
+    }
 }

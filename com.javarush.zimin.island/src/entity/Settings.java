@@ -10,6 +10,8 @@ public class Settings {
     public static int lengthIsland = 10;
     public static int widthIsland = 10;
     public static int longCycle = 5;
+    public static int countThread = 4;
+    public static int countThreadShed = 2;
     /*Настройка растений*/
     public static int weightPlant = 1;
     public static int maxCountPlant = 200;
@@ -73,7 +75,7 @@ public class Settings {
                     new Object[][]{
                             {"Wolf", 0}, {"Boa", 80}, {"Fox", 0}, {"Eagle", 0}, {"Horse", 40}, {"Deer", 80},
                             {"Rabbit", 80}, {"Mouse", 90}, {"Goat", 70}, {"Sheep", 70}, {"Boar", 50}, {"Buffalo", 20},
-                            {"Duck", 10}, {"Caterpillar", 0}, {"Plants", 0}})
+                            {"Duck", 10}, {"Caterpillar", 0}, {"Bear", 0}})
             .collect(Collectors.toMap(data -> (String) data[0], data -> (Integer) data[1]));
 
 
@@ -89,6 +91,7 @@ public class Settings {
     public static double maxSatietyBoar = 50;
     public static double actualSatietyBoar = 50;
     public static int countBoarOnOneCell = 50;
+    public static int chanceEatCaterpillarBoar = 90;
 
     public static double weightBuffalo = 700;
     public static int maxSpeedBuffalo = 3;
@@ -113,6 +116,7 @@ public class Settings {
     public static double maxSatietyDuck = 0.15;
     public static double actualSatietyDuck = 0.15;
     public static int countDuckOnOneCell = 200;
+    public static int chanceEatCaterpillarDuck = 90;
 
     public static double weightGoat = 60;
     public static int maxSpeedGoat = 3;
@@ -131,6 +135,7 @@ public class Settings {
     public static double maxSatietyMouse = 0.15;
     public static double actualSatietyMouse = 0.15;
     public static int countMouseOnOneCell = 500;
+    public static int chanceEatCaterpillarMouse = 90;
 
     public static double weightRabbit = 2;
     public static int maxSpeedRabbit = 2;
@@ -139,9 +144,18 @@ public class Settings {
     public static int countRabbitOnOneCell = 150;
 
 
-    public static Map<String, Double> weightOfAllEdibleAnimals = Map.of("Sheep", 70.0, "Horse", 400.0, "Deer", 300.0,
-            "Rabbit", 2.0, "Mouse", 0.1, "Goat", 60.0, "Boar", 400.0, "Buffalo", 700.0,
-            "Duck", 1.0, "Caterpillar", 0.01);
+    public static Map<String, Double> weightOfAllEdibleAnimals = Stream.of(
+                    new Object[][]{
+                            {"Wolf", 50.0}, {"Boa", 15.0}, {"Fox", 8.0}, {"Eagle", 6.0}, {"Horse", 400.0}, {"Deer", 300.0},
+                            {"Rabbit", 2.0}, {"Mouse", 0.05}, {"Goat", 60.0}, {"Sheep", 70.0}, {"Boar", 400.0}, {"Buffalo", 700.0},
+                            {"Duck", 1.0}, {"Caterpillar", 0.01}, {"Bear", 500.0}})
+            .collect(Collectors.toMap(data -> (String) data[0], data -> (Double) data[1]));
+
+
+
+//            Map.of("Sheep", 70.0, "Horse", 400.0, "Deer", 300.0,
+//            "Rabbit", 2.0, "Mouse", 0.1, "Goat", 60.0, "Boar", 400.0, "Buffalo", 700.0,
+//            "Duck", 1.0, "Caterpillar", 0.01);
 
 
 

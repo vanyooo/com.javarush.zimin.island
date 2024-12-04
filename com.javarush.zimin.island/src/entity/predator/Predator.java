@@ -33,23 +33,22 @@ public abstract class Predator extends Animal {
                             this.probabilityEaten.getOrDefault(a1.getClass().getSimpleName(), 0)
                     ))
                     .toList();
-            for (Animal animal : listFilter) {
-                try {
-                    Integer probability = this.probabilityEaten.get(animal.getClass().getSimpleName());
-                    int randomNum = ThreadLocalRandom.current().nextInt(1, 101);
-                    if (probability >= randomNum) {
-                        Double weightFood = Settings.weightOfAllEdibleAnimals.get(animal.getClass().getSimpleName());
-                        if (weightFood > maxSatiety) {
-                            actualSatiety = maxSatiety;
-                        } else {
-                            actualSatiety += weightFood;
-                        }
-                        cell.listAnimal.remove(animal);
-                    }
-                    return;
-                } catch (NullPointerException nullPint) {
-                    return;
+            if (listFilter.isEmpty()) {
+                return;
+            }
+            Animal first = null;
+            first = listFilter.getFirst();
+//                System.out.println(this.getClass().getSimpleName() + "||" + first.getClass().getSimpleName());
+            Integer probability = this.probabilityEaten.get(first.getClass().getSimpleName());
+            int randomNum = ThreadLocalRandom.current().nextInt(1, 101);
+            if (probability >= randomNum) {
+                Double weightFood = Settings.weightOfAllEdibleAnimals.get(first.getClass().getSimpleName());
+                if (weightFood > maxSatiety) {
+                    actualSatiety = maxSatiety;
+                } else {
+                    actualSatiety += weightFood;
                 }
+                cell.listAnimal.remove(first);
             }
         } finally {
             lock.unlock();

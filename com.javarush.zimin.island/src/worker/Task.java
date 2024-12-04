@@ -16,10 +16,10 @@ public class Task {
     }
 
     public void doTask() {
-        animal.reproduce(cell);
         animal.eat(cell);
-        animal.worker();
+        animal.reproduce(cell);
         animal.dei(cell);
-        animal.move(island);
+//        animal.move(island);
+        animal.worker();
     }
 }

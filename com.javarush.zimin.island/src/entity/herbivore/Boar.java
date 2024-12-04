@@ -31,7 +31,7 @@ public class Boar extends Herbivore {
             List<Animal> listCaterpillar = listAnimal.stream().filter(animal -> animal instanceof Caterpillar).toList();
             if (!listCaterpillar.isEmpty()) {
                 for (Animal cater : listCaterpillar) {
-                    int probability = 90;
+                    int probability = Settings.chanceEatCaterpillarBoar;
                     int randomNum = ThreadLocalRandom.current().nextInt(1, 101);
                     if (probability >= randomNum) {
                         Double weightFood = Settings.weightOfAllEdibleAnimals.get(cater.getClass().getSimpleName());
@@ -43,23 +43,23 @@ public class Boar extends Herbivore {
                         cell.listAnimal.remove(cater);
                     }
                 }
-                CopyOnWriteArrayList<Plant> listPlant = cell.listPlant;
-                if (listPlant.isEmpty()) {
-                    return;
-                }
-                for (Plant plant : listPlant) {
-                    int weightPlant = Plant.weight;
-                    if (weightPlant > maxSatiety) {
-                        actualSatiety = maxSatiety;
-                        cell.listPlant.remove(plant);
-                    } else {
-                        actualSatiety = actualSatiety + weightPlant + (maxSatiety * 0.3);
-                        cell.listPlant.remove(plant);
-                    }
-                    return;
-                }
             }
-        }finally {
+            CopyOnWriteArrayList<Plant> listPlant = cell.listPlant;
+            if (listPlant.isEmpty()) {
+                return;
+            }
+            for (Plant plant : listPlant) {
+                int weightPlant = Plant.weight;
+                if (weightPlant > maxSatiety) {
+                    actualSatiety = maxSatiety;
+                    cell.listPlant.remove(plant);
+                } else {
+                    actualSatiety = actualSatiety + weightPlant + (maxSatiety * 0.3);
+                    cell.listPlant.remove(plant);
+                }
+                return;
+            }
+        } finally {
             lock.unlock();
         }
     }

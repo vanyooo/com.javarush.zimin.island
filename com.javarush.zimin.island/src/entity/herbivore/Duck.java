@@ -30,36 +30,37 @@ public class Duck extends Herbivore {
             CopyOnWriteArrayList<Animal> listAnimal = cell.listAnimal;
             List<Animal> listCaterpillar = listAnimal.stream().filter(animal -> animal instanceof Caterpillar).toList();
             if (!listCaterpillar.isEmpty()) {
-                for (Animal cater : listCaterpillar) {
-                    int probability = 90;
-                    int randomNum = ThreadLocalRandom.current().nextInt(1, 101);
-                    if (probability >= randomNum) {
-                        Double weightFood = Settings.weightOfAllEdibleAnimals.get(cater.getClass().getSimpleName());
-                        if (weightFood > maxSatiety) {
-                            actualSatiety = maxSatiety;
-                        } else {
-                            actualSatiety += weightFood;
-                        }
-                        cell.listAnimal.remove(cater);
-                    }
-                }
-                CopyOnWriteArrayList<Plant> listPlant = cell.listPlant;
-                if (listPlant.isEmpty()) {
-                    return;
-                }
-                for (Plant plant : listPlant) {
-                    int weightPlant = Plant.weight;
-                    if (weightPlant > maxSatiety) {
+                Animal first = listCaterpillar.getFirst();
+                int probability = Settings.chanceEatCaterpillarDuck;
+                int randomNum = ThreadLocalRandom.current().nextInt(1, 101);
+                if (probability >= randomNum) {
+                    Double weightFood = Settings.weightOfAllEdibleAnimals.get(first.getClass().getSimpleName());
+                    if (weightFood > maxSatiety) {
                         actualSatiety = maxSatiety;
-                        cell.listPlant.remove(plant);
                     } else {
-                        actualSatiety = actualSatiety + weightPlant + (maxSatiety * 0.3);
-                        cell.listPlant.remove(plant);
+                        actualSatiety += weightFood;
                     }
-                    return;
+                    cell.listAnimal.remove(first);
                 }
             }
-        }finally {
+            if (actualSatiety >= maxSatiety) {
+                actualSatiety = maxSatiety;
+                return;
+            }
+            CopyOnWriteArrayList<Plant> listPlant = cell.listPlant;
+            if (listPlant.isEmpty()) {
+                return;
+            }
+            Plant firstPlant = listPlant.getFirst();
+            int weightPlant = Plant.weight;
+            if (weightPlant > maxSatiety) {
+                actualSatiety = maxSatiety;
+                cell.listPlant.remove(firstPlant);
+            } else {
+                actualSatiety = actualSatiety + weightPlant + (maxSatiety * 0.3);
+                cell.listPlant.remove(firstPlant);
+            }
+        } finally {
             lock.unlock();
         }
     }

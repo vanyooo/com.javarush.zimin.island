@@ -29,6 +29,8 @@ public class PlantWorker implements Runnable {
             for (int j = 0; j < island.islandArrays[i].length; j++) {
                 if (island.islandArrays[i][j].listPlant.size() <= maxCountPlant) {
                     island.islandArrays[i][j].listPlant.add(new Plant());
+                } else {
+                    return;
                 }
             }
         }
