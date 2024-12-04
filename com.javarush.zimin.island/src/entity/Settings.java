@@ -7,8 +7,8 @@ import java.util.stream.Stream;
 public class Settings {
 
     /* Настройки острова*/
-    public static int lengthIsland = 10;
-    public static int widthIsland = 10;
+    public static int lengthIsland = 5;
+    public static int widthIsland = 5;
     public static int longCycle = 5;
     public static int countThread = 4;
     public static int countThreadShed = 2;

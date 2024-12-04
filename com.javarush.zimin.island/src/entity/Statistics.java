@@ -1,67 +1,16 @@
-package worker;
+package entity;
 
-import entity.Location.Cell;
 import entity.Location.Island;
-import entity.Statistics;
 import entity.herbivore.*;
 import entity.predator.*;
 
 import java.util.Arrays;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class AnimalWorker implements Runnable {
-    Island island;
-    public static final AtomicInteger countDay = new AtomicInteger(1);
-    private final Queue<Task> tasks = new ConcurrentLinkedQueue<>();
+public class Statistics implements Runnable {
 
-    public AnimalWorker(Island island) {
-        this.island = island;
-    }
+    public static int size;
+    public static void collectingStatistics(Island island) {
 
-    @Override
-    public void run() {
-        Cell[][] cell = island.islandArrays;
-        for (Cell[] cells : cell) {
-            for (Cell cell1 : cells) {
-                CountDownLatch latch = new CountDownLatch(1);
-                try {
-                    processOneCell(cell1);
-                } catch (Exception e) {
-                    //TODO replace it -> throw...
-                    e.printStackTrace();
-                    System.err.println("OMG. Debug it!");
-                    System.exit(0);
-                } finally {
-                    latch.countDown();
-                }
-                try {
-                    latch.await();
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    System.err.println("INTERRUPTED");
-                }
-            }
-        }
-        System.out.println("День: " + countDay.getAndIncrement());
-        Statistics.collectingStatistics(island);
-        System.out.println();
-    }
-
-    public void processOneCell(Cell cell) {
-        cell.lock.lock();
-        try {
-            cell.listAnimal.forEach(animal -> tasks.add(new Task(animal, cell, island)));
-        } finally {
-            cell.lock.unlock();
-        }
-        tasks.forEach(Task::doTask);
-        tasks.clear();
-    }
-
-    public void printStat(Island island) {
         int sizePlant = Arrays.stream(island.islandArrays).flatMap(Arrays::stream).mapToInt(cell -> cell.listPlant.size()).sum();
         int sizeWolf = Arrays.stream(island.islandArrays).flatMap(Arrays::stream).flatMap(cell -> cell.listAnimal.stream())
                 .filter(c -> c instanceof Wolf).map(c -> (Wolf) c).toList().size();
@@ -100,5 +49,18 @@ public class AnimalWorker implements Runnable {
                 + "||" + "Buf: " + sizeBuf + "||" + "Rabbit: " + sizeRabbit + "||" + "Goat: " + sizeGoat + "||" + "Mouse: " + sizeMouse
                 + "||" + "Duck: " + sizeDuck + "||" + "Horse: " + sizeHorse + "||" + "Caterpillar: " + sizeCaterpillar + "\n");
         System.out.print( "Plant: " + sizePlant + "||" + "Herbivore: " + sizeHerbivore + "||" + "Predator: " + sizePredator + "\n");
+    }
+
+    public static int countNumberAnimal(Island island) {
+        int sizePredator = Arrays.stream(island.islandArrays).flatMap(Arrays::stream).flatMap(cell -> cell.listAnimal.stream())
+                .filter(c -> c instanceof Predator).map(c -> (Predator) c).toList().size();
+        int sizeHerbivore = Arrays.stream(island.islandArrays).flatMap(Arrays::stream).flatMap(cell -> cell.listAnimal.stream())
+                .filter(c -> c instanceof Herbivore).map(c -> (Herbivore) c).toList().size();
+        return sizeHerbivore + sizePredator;
+    }
+
+    @Override
+    public void run() {
+
     }
 }

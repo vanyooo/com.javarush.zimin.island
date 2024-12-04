@@ -28,7 +28,7 @@ public abstract class Herbivore extends Animal {
                     actualSatiety = maxSatiety;
                     cell.listPlant.remove(plant);
                 } else {
-                    actualSatiety = actualSatiety + weightPlant + (maxSatiety * 0.3);
+                    actualSatiety = actualSatiety + weightPlant + (maxSatiety * 0.05);
                     cell.listPlant.remove(plant);
                 }
                 return;

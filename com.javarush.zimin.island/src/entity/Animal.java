@@ -47,7 +47,7 @@ public abstract class Animal {
 
     public void worker() {
         lock.lock();
-        this.actualSatiety = this.actualSatiety - (this.maxSatiety * 0.2) - 0.5;
+        this.actualSatiety = this.actualSatiety - (this.maxSatiety * 0.5) - 0.5;
         lock.unlock();
     }
 
@@ -57,7 +57,6 @@ public abstract class Animal {
 
     public void move(Island island) {
         lock.lock();
-        boolean result = true;
         try {
             Cell[][] islandArrays = island.islandArrays;
             for (int i = 0; i < islandArrays.length; i++) {
@@ -66,7 +65,6 @@ public abstract class Animal {
                         try {
                             int randomStep = ThreadLocalRandom.current().nextInt(0, this.maxSpeed + 1);
                             int randomDirection = ThreadLocalRandom.current().nextInt(1, 9);
-                            islandArrays[i][j].listAnimal.remove(this);
                             int newI = i;
                             int newJ = j;
                             switch (randomDirection) {
@@ -93,7 +91,13 @@ public abstract class Animal {
                             }
                             newI = (newI + islandArrays.length) % islandArrays.length;
                             newJ = (newJ + islandArrays[i].length) % islandArrays[i].length;
+                            int sizeAnimal = islandArrays[newI][newJ].listAnimal.stream().filter(animal -> this.getClass()
+                                    .equals(animal.getClass())).toList().size();
+                            if (sizeAnimal >= this.countOnOneCell){
+                                return;
+                            }
                             islandArrays[newI][newJ].listAnimal.add(this);
+                            islandArrays[i][j].listAnimal.remove(this);
                             return;
                         } catch (ArithmeticException ae) {
                             return;
@@ -111,7 +115,7 @@ public abstract class Animal {
         try {
             CopyOnWriteArrayList<Animal> listAnimal = cell.listAnimal;
             int randomNum = ThreadLocalRandom.current().nextInt(1, 101);
-            if (randomNum >= 0) {
+            if (randomNum >= 50) {
                 int sizeIndividual = listAnimal.stream().filter(count -> this.getClass()
                         .equals(count.getClass())).toList().size();
                 if (sizeIndividual < 2) {

@@ -19,7 +19,7 @@ public class Task {
         animal.eat(cell);
         animal.reproduce(cell);
         animal.dei(cell);
-//        animal.move(island);
+        animal.move(island);
         animal.worker();
     }
 }

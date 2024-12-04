@@ -2,10 +2,9 @@ import entity.Animal;
 import entity.Location.Cell;
 import entity.Location.Island;
 import entity.Plant;
+import entity.Settings;
 import entity.herbivore.*;
 import entity.predator.*;
-import worker.AnimalWorker;
-
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -20,6 +19,7 @@ public class IslandInitialization {
             }
         }
         island.islandArrays[0][0].listAnimal.addAll(createAnimals());
+        island.islandArrays[Settings.lengthIsland-1][Settings.widthIsland-1].listAnimal.addAll(createAnimals());
     }
     public static List<Animal> createAnimals() {
         List<Animal> animals = new CopyOnWriteArrayList<>();
@@ -60,12 +60,4 @@ public class IslandInitialization {
         return List.of(new Plant(), new Plant(), new Plant());
     }
 
-    public static boolean check() {
-        boolean result = true;
-        int i = AnimalWorker.countDay.get();
-        if (i > 10) {
-            result = false;
-        }
-        return result;
-    }
 }
