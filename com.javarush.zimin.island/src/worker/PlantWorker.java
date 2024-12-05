@@ -1,8 +1,8 @@
 package worker;
 
-import entity.Location.Island;
-import entity.Plant;
-import entity.Settings;
+import entity.location.Island;
+import entity.plant.Plant;
+import config.Settings;
 
 public class PlantWorker implements Runnable {
     Island island;

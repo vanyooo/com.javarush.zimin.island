@@ -1,8 +1,8 @@
 package worker;
 
-import entity.Animal;
-import entity.Location.Cell;
-import entity.Location.Island;
+import entity.animal.Animal;
+import entity.location.Cell;
+import entity.location.Island;
 
 public class Task {
     private final Animal animal;

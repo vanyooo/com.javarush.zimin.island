@@ -1,8 +1,9 @@
 package worker;
 
-import entity.Location.Cell;
-import entity.Location.Island;
-import entity.Statistics;
+import entity.location.Cell;
+import entity.location.Island;
+import statistic.Statistics;
+
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.CountDownLatch;
