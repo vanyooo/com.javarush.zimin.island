@@ -17,8 +17,6 @@ public class PlantWorker implements Runnable {
         try {
             plantGrowth();
         } catch (Exception e) {
-            //TODO replace it -> throw...
-            e.printStackTrace();
             System.err.println("OMG. Debug it!");
             System.exit(0);
         }

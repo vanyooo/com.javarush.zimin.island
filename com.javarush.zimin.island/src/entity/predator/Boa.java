@@ -1,6 +1,5 @@
 package entity.predator;
 
-
 import entity.Settings;
 
 public class Boa extends Predator {

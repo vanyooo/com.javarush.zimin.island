@@ -7,14 +7,16 @@ import java.util.stream.Stream;
 public class Settings {
 
     /* Настройки острова*/
-    public static int lengthIsland = 3;
-    public static int widthIsland = 3;
-    public static int longCycle = 5;
+    public static int lengthIsland = 5;
+    public static int widthIsland = 5;
+    public static int longCycle = 20;
     public static int countThread = 4;
     public static int countThreadShed = 2;
+    public static int countThreadShedPlant = 2;
     /* Настройки размножения и поедания*/
     public static int randomMating = 10;
     public static double onTopWeightAnimalAndPlant = 0.1;
+    public static double workerPercent = 0.1;
     /*Настройка растений*/
     public static int weightPlant = 1;
     public static int maxCountPlant = 200;
@@ -153,13 +155,4 @@ public class Settings {
                             {"Rabbit", 2.0}, {"Mouse", 0.05}, {"Goat", 60.0}, {"Sheep", 70.0}, {"Boar", 400.0}, {"Buffalo", 700.0},
                             {"Duck", 1.0}, {"Caterpillar", 0.01}, {"Bear", 500.0}})
             .collect(Collectors.toMap(data -> (String) data[0], data -> (Double) data[1]));
-
-
-
-//            Map.of("Sheep", 70.0, "Horse", 400.0, "Deer", 300.0,
-//            "Rabbit", 2.0, "Mouse", 0.1, "Goat", 60.0, "Boar", 400.0, "Buffalo", 700.0,
-//            "Duck", 1.0, "Caterpillar", 0.01);
-
-
-
 }

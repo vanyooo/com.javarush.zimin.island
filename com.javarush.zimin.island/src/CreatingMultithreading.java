@@ -17,21 +17,21 @@ public class CreatingMultithreading {
 
     public CreatingMultithreading(Island island) {
         this.island = island;
-        this.executorSimulationService = Executors.newScheduledThreadPool(Settings.countThread);
+        this.executorSimulationService = Executors.newScheduledThreadPool(Settings.countThreadShed);
         this.serviceForCreaturesWorker = Executors.newFixedThreadPool(Settings.countThread);
-        this.executorServicePlant = Executors.newScheduledThreadPool(Settings.countThreadShed);
+        this.executorServicePlant = Executors.newScheduledThreadPool(Settings.countThreadShedPlant);
     }
 
     public void islandStartLive() {
         executorSimulationService.scheduleWithFixedDelay(this::lifeCycle, 0, 1000, TimeUnit.MILLISECONDS);
-        executorServicePlant.scheduleWithFixedDelay(new PlantWorker(island), 0, 500, TimeUnit.MILLISECONDS);
+        executorServicePlant.scheduleWithFixedDelay(new PlantWorker(island), 0, 800, TimeUnit.MILLISECONDS);
     }
 
     private void lifeCycle() {
         AnimalWorker animalWorker = new AnimalWorker(island);
         serviceForCreaturesWorker.execute(animalWorker);
-        int stop = Statistics.countNumberAnimal(island);
-        if (Statistics.countNumberAnimal(island) == 0) {
+        int stop = Settings.longCycle;
+        if (Statistics.countNumberAnimal(island) == 0 || AnimalWorker.countDay.get() == stop) {
             stopSimulation();
         }
     }

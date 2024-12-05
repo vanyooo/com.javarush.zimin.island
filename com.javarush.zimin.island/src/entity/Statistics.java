@@ -3,10 +3,7 @@ package entity;
 import entity.Location.Island;
 import entity.herbivore.*;
 import entity.predator.*;
-
 import java.util.Arrays;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class Statistics {
 

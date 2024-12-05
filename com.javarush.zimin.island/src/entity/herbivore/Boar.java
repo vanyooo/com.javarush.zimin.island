@@ -12,7 +12,6 @@ public class Boar extends Herbivore {
 
     public Boar() {
         super.setActualSatiety(Settings.actualSatietyBoar);
-        super.setActualSatiety(Settings.actualSatietyBoar);
         super.setWeight(Settings.weightBoar);
         super.setMaxSpeed(Settings.maxSpeedBoar);
         super.setMaxSatiety(Settings.maxSatietyBoar);
@@ -31,7 +30,7 @@ public class Boar extends Herbivore {
             List<Animal> listCaterpillar = listAnimal.stream().filter(animal -> animal instanceof Caterpillar).toList();
             if (!listCaterpillar.isEmpty()) {
                 for (Animal cater : listCaterpillar) {
-                    int probability = Settings.chanceEatCaterpillarMouse;
+                    int probability = Settings.chanceEatCaterpillarBoar;
                     int randomNum = ThreadLocalRandom.current().nextInt(1, 101);
                     if (probability >= randomNum) {
                         Double weightFood = Settings.weightOfAllEdibleAnimals.get(cater.getClass().getSimpleName());

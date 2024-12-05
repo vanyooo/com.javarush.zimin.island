@@ -23,29 +23,29 @@ public abstract class Animal {
         this.weight = weight;
     }
 
-    public void setMaxSpeed(int maxSpeed) {
-        this.maxSpeed = maxSpeed;
-    }
-
-    public void setMaxSatiety(double maxSatiety) {
-        this.maxSatiety = maxSatiety;
-    }
-
-    public void setActualSatiety(double actualSatiety) {
-        this.actualSatiety = actualSatiety;
+    public void setProbabilityEaten(Map<String, Integer> probabilityEaten) {
+        this.probabilityEaten = probabilityEaten;
     }
 
     public void setCountOnOneCell(int countOnOneCell) {
         this.countOnOneCell = countOnOneCell;
     }
 
-    public void setProbabilityEaten(Map<String, Integer> probabilityEaten) {
-        this.probabilityEaten = probabilityEaten;
+    public void setActualSatiety(double actualSatiety) {
+        this.actualSatiety = actualSatiety;
+    }
+
+    public void setMaxSatiety(double maxSatiety) {
+        this.maxSatiety = maxSatiety;
+    }
+
+    public void setMaxSpeed(int maxSpeed) {
+        this.maxSpeed = maxSpeed;
     }
 
     public void worker() {
         lock.lock();
-        this.actualSatiety = this.actualSatiety - (this.maxSatiety * 0.2) - 0.1;
+        this.actualSatiety = this.actualSatiety - (this.maxSatiety * Settings.workerPercent) - 0.1;
         lock.unlock();
     }
 
