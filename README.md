@@ -36,8 +36,8 @@ move - передвижение животного по острову. Нахо
 движения. Вариантов движений 8: вверх, вверх парво, право, вниз право, вних, вниз лево, лево, вверх лево. Если количество вида на одной клнтке допускает перемещение, добовляем животное в новую клетку, а из старой удаляем.
 
 
-Многопоточность
-executorSimulationService - newScheduledThreadPool который раз в секунду вызывет метод lifeCycle() в котором действует serviceForCreaturesWorker. Количество потоков устанавливает поле countThreadShed в классе Settings.
+Многопоточность: 
+executorSimulationService - newScheduledThreadPool который раз в секунду вызывет метод lifeCycle() в котором создаётся serviceForCreaturesWorker. Количество потоков устанавливает поле countThreadShed в классе Settings.
 serviceForCreaturesWorker вызывает методы всех животных в одной клетке, отвечает за вывод статистики и инкрементирует поле AtomicInteger countDay - количество дней. 
 executorServicePlant отвечает за рост Plant, количество потоков указывается в поле countThreadShedPlan в классе Settings.
 Поле longCycle устанавлевает длительность жизненного цикла. В методе lifeCycle() если countDay равно значению longCycle или Animal на острове не осталось вызываюется метод stopSimulation(), в котором вызывается shutdownNow() для всех executors.
